@@ -28,17 +28,21 @@ function CommandPromptTimer {
     If ($LastCommandRunStats.TotalMilliseconds -lt 1000) 
         {([math]::Round($LastCommandRunStats.TotalMilliseconds,3)),'ms';return}
     #Seconds
-    If (($LastCommandRunStats.TotalSeconds -gt 1) -AND ($LastCommandRunStats.TotalSeconds -lt 120)) 
+    If (($LastCommandRunStats.TotalSeconds -gt 1) -AND ($LastCommandRunStats.TotalSeconds -lt 60)) 
         {([math]::Round($LastCommandRunStats.TotalSeconds,3)),'sec';return}
     #Minutes
-    If (($LastCommandRunStats.TotalMinutes -gt 1) -AND ($LastCommandRunStats.TotalMinutes -lt 120)) 
-        {([math]::Round($LastCommandRunStats.TotalMinutes,3)),'min';return}
+    If (($LastCommandRunStats.TotalMinutes -gt 1) -AND ($LastCommandRunStats.TotalMinutes -lt 60)) 
+        {($LastCommandRunStats.Minutes),'min',[math]::Round(($LastCommandRunStats.TotalSeconds - ($LastCommandRunStats.Minutes * 60)),2),'sec';return}
     #Hours
-    If (($LastCommandRunStats.TotalHours -gt 1) -AND ($LastCommandRunStats.TotalHours -lt 24)) 
-        {([math]::Round($LastCommandRunStats.TotalHours,3)),'hours';return}
-    #Days
-    If ($LastCommandRunStats.TotalDays -gt 1) 
-        {([math]::Round($LastCommandRunStats.TotalDays,3)),'days';return}
+    If ($LastCommandRunStats.TotalMilliseconds -gt 1) 
+        {"`r`n",'Started at:',(Get-History)[-1].EndExecutionTime,"`r`n",'Ended at:',(Get-History)[-1].StartExecutionTime,"`r`n",([math]::Round($LastCommandRunStats.TotalHours,3)),'hours',"`r`n",($LastCommandRunStats.Hours),'hours',($LastCommandRunStats.Minutes),'min',[math]::Round(($LastCommandRunStats.TotalSeconds - ($LastCommandRunStats.Minutes * 60)),2),'sec';return}
 }
 
-function prompt {"PS: $(CommandPromptTimer) | $(Get-Location)> "}
+function prompt {
+    $lastResult = Invoke-Expression '$?'
+    if (!$lastResult) {Write-Host "Last command exited with error status." -ForegroundColor Red}
+    
+    "PS: $(CommandPromptTimer) | $(Get-Location)> "
+}
+
+
