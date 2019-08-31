@@ -15,15 +15,21 @@
     Also, when the command goes over 1 Hour, it will show you StartExecutionTime and EndExecutionTime, along
       with a decimal representation of the hours, and the breakdown of Hours, Minutes and Seconds
     No plans yet to do anything when it goes over 24 hours.
-    
-  
-  
-  Error Handling
+   
+  Error Handling:
     If the command is cancelled, or exits with an error status, it will display a message on the prompt 
     (no matter what length of execution time)
 
+  Colors:
+    As of 1.4, the prompt now has colors.  There are separate lines for the Execution Time and the Current Directory.
+    You can set a color for each.  Default is green.
+  
+  Window Title:
+    As of 1.4, the prompt function also renames the window, including and insert for the last time a command was run.  
+    I found this useful when I had multiple windows opened.  Can be easily removed.
+
 .NOTES
-  Version:        1.2
+  Version:        1.4
   Author:         Ben Therien (Inventologist)
   Creation Date:  2019/08/31
 
@@ -36,7 +42,7 @@
   ENJOY!!
 #>
 
-function CommandPromptTimer {
+Function CommandPromptTimer {
     $LastCommandRunStats = (Get-History)[-1].EndExecutionTime - (Get-History)[-1].StartExecutionTime
 
     #Milliseconds
@@ -53,11 +59,15 @@ function CommandPromptTimer {
         {"`r`n",'Started at:',(Get-History)[-1].EndExecutionTime,"`r`n",'Ended at:',(Get-History)[-1].StartExecutionTime,"`r`n",([math]::Round($LastCommandRunStats.TotalHours,3)),'hours',"`r`n",($LastCommandRunStats.Hours),'hours',($LastCommandRunStats.Minutes),'min',[math]::Round(($LastCommandRunStats.TotalSeconds - ($LastCommandRunStats.Minutes * 60)),2),'sec';return}
 }
 
-function prompt {
+Function Prompt {
+    $Host.UI.RawUI.WindowTitle = "PowerShell ISE | Last Command:",(Get-Date -UFormat '%y/%m/%d %R').Tostring()
+
     $lastResult = Invoke-Expression '$?'
     if (!$lastResult) {Write-Host "Last command exited with error status." -ForegroundColor Red}
     
-    "PS: $(CommandPromptTimer) | $(Get-Location)> "
+    Write-Host -no "PS: "
+    Write-Host -no "$(CommandPromptTimer)" -ForegroundColor Green
+    Write-Host -no " | $(Get-Location | Split-Path)\"
+    Write-Host -no "$(Get-Location | Split-Path -Leaf)" -ForegroundColor Green #<--You can change the foregroundcolor here of the directory you are in
+    return "> " #have to use return here os else Powershell will attempt to put the default "PS>" at the end of the line
 }
-
-
