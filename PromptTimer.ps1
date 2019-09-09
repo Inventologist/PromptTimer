@@ -67,7 +67,7 @@ Function Prompt {
     
     Write-Host -no "PS: "
     Write-Host -no "$(CommandPromptTimer)" -ForegroundColor Green
-    Write-Host -no " | $(Get-Location | Split-Path)\"
+    Write-Host -no " | $(Get-Location | Split-Path)"
     Write-Host -no "$(Get-Location | Split-Path -Leaf)" -ForegroundColor Green #<--You can change the foregroundcolor here of the directory you are in
     return "> " #have to use return here os else Powershell will attempt to put the default "PS>" at the end of the line
 }
