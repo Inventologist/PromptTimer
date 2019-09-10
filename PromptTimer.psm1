@@ -69,6 +69,7 @@ Function Prompt {
     $PromptColor_Leaf = "Green"
 
     Write-Host -no "PS: "
+<<<<<<< HEAD:PromptTimer.psm1
     Write-Host -no "$(CommandPromptTimer)" -ForegroundColor $PromptColor_Timer
     
     #Get-Location... when you are at the ROOT
@@ -93,3 +94,10 @@ Function Prompt {
         return "> " #have to use return here os else Powershell will attempt to put the default "PS>" at the end of the line
         }
 }
+=======
+    Write-Host -no "$(CommandPromptTimer)" -ForegroundColor Green
+    Write-Host -no " | $(Get-Location | Split-Path)"
+    Write-Host -no "$(Get-Location | Split-Path -Leaf)" -ForegroundColor Green #<--You can change the foregroundcolor here of the directory you are in
+    return "> " #have to use return here os else Powershell will attempt to put the default "PS>" at the end of the line
+}
+>>>>>>> f70c2515a8c83052528b4cff9587284ee08a853f:PromptTimer.ps1
