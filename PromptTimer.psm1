@@ -11,7 +11,7 @@
   
   Format changes as the execution time gets longer:
     It will not show you: 1340.043435 ms, it will show you: 1.340 sec
-    It will not show you: 90.50 sec, it will show you: 1 min 30 sec
+    It will not show you: 90.50 sec, it will show you: 1 min 30.5 sec
     Also, when the command goes over 1 Hour, it will show you StartExecutionTime and EndExecutionTime, along
       with a decimal representation of the hours, and the breakdown of Hours, Minutes and Seconds
     No plans yet to do anything when it goes over 24 hours.
