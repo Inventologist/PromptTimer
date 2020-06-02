@@ -69,7 +69,6 @@ Function Prompt {
     $PromptColor_Leaf = "Green"
 
     Write-Host -no "PS: "
-<<<<<<< HEAD:PromptTimer.psm1
     Write-Host -no "$(CommandPromptTimer)" -ForegroundColor $PromptColor_Timer
     
     #Get-Location... when you are at the ROOT
