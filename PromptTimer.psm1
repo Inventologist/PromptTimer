@@ -69,7 +69,7 @@ Function Prompt {
     $PromptColor_Leaf = "Green"
 
     Write-Host -no "PS: "
-    Write-Host -no "$(CommandPromptTimer)" -ForegroundColor $PromptColor_Timer
+    Write-Host -no "$(PromptTimer)" -ForegroundColor $PromptColor_Timer
     
     #Get-Location... when you are at the ROOT
     IF (($(Get-Location) | Split-Path).Length -eq 0) {
