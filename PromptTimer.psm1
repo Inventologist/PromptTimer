@@ -26,10 +26,12 @@
   Window Title:
     As of 1.4, the prompt function also renames the window, including and insert for the last time a command was run.  
     I found this useful when I had multiple windows opened.  Can be easily removed.
+
 .NOTES
   Version:        1.4
   Author:         Ben Therien (Inventologist)
   Creation Date:  2019/08/31
+
 .EXAMPLE
   Must be put into your Powershell Profile.
   At the powershell prompt, type: notepad $profile
