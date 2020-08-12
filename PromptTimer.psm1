@@ -58,7 +58,9 @@ Function PromptTimer {
 }
 
 Function Prompt {
-    $Host.UI.RawUI.WindowTitle = "PowerShell ISE | Last Command:",(Get-Date -UFormat '%y/%m/%d %R').Tostring()
+    #Name Window
+    
+    #$Host.UI.RawUI.WindowTitle = "$($Host.Name) | Last Command:",(Get-Date -UFormat '%y/%m/%d %R').Tostring()
 
     $lastResult = Invoke-Expression '$?'
     if (!$lastResult) {Write-Host "Last command exited with error status." -ForegroundColor Red}
@@ -68,7 +70,7 @@ Function Prompt {
     $PromptColor_PS = "White"
     $PromptColor_Divider = "White"
     $PromptColor_Path = "White"
-    $PromptColor_Leaf = "Green"
+    $PromptColor_Leaf = "Green" #<--You can change the foregroundcolor here of the directory you are in
 
     Write-Host -no "PS: "
     Write-Host -no "$(PromptTimer)" -ForegroundColor $PromptColor_Timer
@@ -83,7 +85,7 @@ Function Prompt {
     IF ((($(Get-Location) | Split-Path).Length -ne 0) -AND (($(Get-Location) | Split-Path) -eq $(Get-Location).Drive.Root)) {
         Write-Host -no " | " -ForegroundColor $PromptColor_Divider
         Write-Host -no "$(Get-Location | Split-Path)" -ForegroundColor $PromptColor_Path
-        Write-Host -no "$(Get-Location | Split-Path -Leaf)" -ForegroundColor $PromptColor_Leaf #<--You can change the foregroundcolor here of the directory you are in
+        Write-Host -no "$(Get-Location | Split-Path -Leaf)" -ForegroundColor $PromptColor_Leaf
         return "> " #have to use return here os else Powershell will attempt to put the default "PS>" at the end of the line
         }
     #Get-Location... when you are >1 level down from the ROOT
@@ -91,7 +93,7 @@ Function Prompt {
 
         Write-Host -no " | " -ForegroundColor $PromptColor_Divider
         Write-Host -no "$(Get-Location | Split-Path)\" -ForegroundColor $PromptColor_Path
-        Write-Host -no "$(Get-Location | Split-Path -Leaf)" -ForegroundColor $PromptColor_Leaf #<--You can change the foregroundcolor here of the directory you are in
+        Write-Host -no "$(Get-Location | Split-Path -Leaf)" -ForegroundColor $PromptColor_Leaf
         return "> " #have to use return here os else Powershell will attempt to put the default "PS>" at the end of the line
         }
 }
